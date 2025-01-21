@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template
 from pptx import Presentation
+from pptx.enum.shapes import MSO_SHAPE_TYPE
 import os
 
 app = Flask(__name__)
@@ -29,13 +30,26 @@ def analyze_pptx(filepath):
             'layout_name': layout.name,
             'placeholders': []
         }
-        for placeholder in layout.placeholders:
+        for shape in layout.shapes:
+            if not shape.is_placeholder:
+                continue
+            phf = shape.placeholder_format
+            ph_type = phf.type
+            ph_idx = phf.idx
+            ph_name = shape.name
+            ph_content = ""
+            if shape.has_text_frame:
+                ph_content = shape.text_frame.text
             layout_info['placeholders'].append({
-                'idx': placeholder.placeholder_format.idx,
-                'type': placeholder.placeholder_format.type
+                'idx': ph_idx,
+                'name': ph_name,
+                'type': ph_type,
+                'content': ph_content
             })
         details.append(layout_info)
     return details
 
 if __name__ == '__main__':
+    if not os.path.exists(app.config['UPLOAD_FOLDER']):
+        os.makedirs(app.config['UPLOAD_FOLDER'])
     app.run(debug=True)
