@@ -18,7 +18,11 @@
             <strong>Layout {{ layout.layout_index }}: {{ layout.layout_name }}</strong>
             <ul>
               {% for placeholder in layout.placeholders %}
-                <li>Platzhalter {{ placeholder.idx }}: {{ placeholder.type }}</li>
+                <li>
+                  <strong>Platzhalter {{ placeholder.idx }}: {{ placeholder.name }}</strong><br>
+                  Typ: {{ placeholder.type }}<br>
+                  Inhalt: {{ placeholder.content }}
+                </li>
               {% endfor %}
             </ul>
           </li>
