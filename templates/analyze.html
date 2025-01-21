@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <title>Analyseergebnisse</title>
+</head>
+<body>
+    <h1>Analyseergebnisse</h1>
+    <form method="post" action="{{ url_for('generate_script') }}">
+        <input type="hidden" name="potx_url" value="{{ potx_url }}">
+        <input type="hidden" name="layouts_info" value="{{ layouts }}">
+        <button type="submit">Skript generieren</button>
+    </form>
+    <h2>Layouts:</h2>
+    <ul>
+        {% for layout in layouts %}
+            <li>
+                <strong>{{ layout.name }}</strong> (Index: {{ layout.index }})
+                <ul>
+                    {% for ph in layout.placeholders %}
+                        <li>Platzhalter {{ ph.idx }}: {{ ph.name }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
