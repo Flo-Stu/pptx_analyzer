@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <title>PPTX Analyzer</title>
+  </head>
+  <body>
+    <h1>PPTX Analyzer</h1>
+    <form method="post" enctype="multipart/form-data">
+      <input type="file" name="file" accept=".pptx">
+      <input type="submit" value="Analyse starten">
+    </form>
+    {% if details %}
+      <h2>Analyseergebnisse:</h2>
+      <ul>
+        {% for layout in details %}
+          <li>
+            <strong>Layout {{ layout.layout_index }}: {{ layout.layout_name }}</strong>
+            <ul>
+              {% for placeholder in layout.placeholders %}
+                <li>Platzhalter {{ placeholder.idx }}: {{ placeholder.type }}</li>
+              {% endfor %}
+            </ul>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </body>
+</html>
