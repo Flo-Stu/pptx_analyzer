@@ -1,33 +1,15 @@
 <!doctype html>
 <html lang="de">
-  <head>
+<head>
     <meta charset="utf-8">
-    <title>PPTX Analyzer</title>
-  </head>
-  <body>
-    <h1>PPTX Analyzer</h1>
-    <form method="post" enctype="multipart/form-data">
-      <input type="file" name="file" accept=".pptx">
-      <input type="submit" value="Analyse starten">
+    <title>PowerPoint Master Analyzer</title>
+</head>
+<body>
+    <h1>PowerPoint Master Analyzer</h1>
+    <form method="post" action="{{ url_for('analyze') }}">
+        <label for="potx_url">URL der POTX-Datei:</label>
+        <input type="url" id="potx_url" name="potx_url" required>
+        <button type="submit">Analyse starten</button>
     </form>
-    {% if details %}
-      <h2>Analyseergebnisse:</h2>
-      <ul>
-        {% for layout in details %}
-          <li>
-            <strong>Layout {{ layout.layout_index }}: {{ layout.layout_name }}</strong>
-            <ul>
-              {% for placeholder in layout.placeholders %}
-                <li>
-                  <strong>Platzhalter {{ placeholder.idx }}: {{ placeholder.name }}</strong><br>
-                  Typ: {{ placeholder.type }}<br>
-                  Inhalt: {{ placeholder.content }}
-                </li>
-              {% endfor %}
-            </ul>
-          </li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-  </body>
+</body>
 </html>
